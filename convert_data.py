@@ -8,14 +8,18 @@ source_dir = "sey_beri_masks"
 output_dir = "data"
 train_dir = os.path.join(output_dir, "train")
 val_dir = os.path.join(output_dir, "val")
-labels_file = os.path.join(output_dir, "labels.csv")
+labels_dir = "labels"
+train_labels_file = os.path.join(labels_dir, "train_labels.csv")
+val_labels_file = os.path.join(labels_dir, "val_labels.csv")
 
 # Create output directories
 os.makedirs(train_dir, exist_ok=True)
 os.makedirs(val_dir, exist_ok=True)
+os.makedirs(labels_dir, exist_ok=True)
 
 # Prepare labels
-labels = []
+train_labels = []
+val_labels = []
 
 # Process the dataset
 for label, subfolder in enumerate(["passed", "failed"]):
@@ -29,18 +33,26 @@ for label, subfolder in enumerate(["passed", "failed"]):
     val_images = images[split_idx:]
     
     # Move images and record labels
-    for img in train_images:
-        shutil.copy(os.path.join(subfolder_path, img), os.path.join(train_dir, img))
-        labels.append((img, label))
+    for idx, img in enumerate(train_images):
+        new_name = f"frame_{idx + 1:05d}.png"
+        shutil.copy(os.path.join(subfolder_path, img), os.path.join(train_dir, new_name))
+        train_labels.append((new_name, label))
     
-    for img in val_images:
-        shutil.copy(os.path.join(subfolder_path, img), os.path.join(val_dir, img))
-        labels.append((img, label))
+    for idx, img in enumerate(val_images):
+        new_name = f"frame_{idx + 1:05d}.png"
+        shutil.copy(os.path.join(subfolder_path, img), os.path.join(val_dir, new_name))
+        val_labels.append((new_name, label))
 
-# Write labels.csv
-with open(labels_file, mode="w", newline="") as f:
+# Write train_labels.csv
+with open(train_labels_file, mode="w", newline="") as f:
     writer = csv.writer(f)
     writer.writerow(["filename", "label"])  # Header
-    writer.writerows(labels)
+    writer.writerows(train_labels)
+
+# Write val_labels.csv
+with open(val_labels_file, mode="w", newline="") as f:
+    writer = csv.writer(f)
+    writer.writerow(["filename", "label"])  # Header
+    writer.writerows(val_labels)
 
 print("Dataset conversion complete!")
