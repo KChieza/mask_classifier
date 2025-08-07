@@ -13,8 +13,8 @@ transforms = transforms.Compose([
 ])
 
 train_dataset = FishMaskDataset(
-    image_dir='data_test/train',
-    label_file='data_test/train_labels.csv',
+    image_dir='data_all/train',
+    label_file='data_all/train_labels.csv',
     transform=transforms
 )
 
@@ -26,8 +26,8 @@ train_dataloader = DataLoader(
 )
 
 val_dataset = FishMaskDataset(
-    image_dir='data_test/val',
-    label_file='data_test/val_labels.csv',
+    image_dir='data_all/val',
+    label_file='data_all/val_labels.csv',
     transform=transforms
 )
 

@@ -3,4 +3,5 @@ sey_beri_masks
 __pycache__/
 sey_beri_masks_v1/
 data_test/
+data_all/
 *.pt 

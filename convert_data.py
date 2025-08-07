@@ -5,7 +5,7 @@ import csv
 
 # Paths
 source_dir = "sey_beri_masks"
-output_dir = "data_test"
+output_dir = "data_all"
 train_dir = os.path.join(output_dir, "train")
 val_dir = os.path.join(output_dir, "val")
 train_labels_file = os.path.join(output_dir, "train_labels.csv")
@@ -20,7 +20,7 @@ train_labels = []
 val_labels = []
 
 # Predefined subset size (set to 0 for all samples)
-subset_size = 50
+subset_size = 0
 
 # Global counter for unique filenames
 global_counter = 1
